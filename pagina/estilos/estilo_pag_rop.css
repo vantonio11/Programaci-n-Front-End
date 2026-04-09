@@ -1,0 +1,212 @@
+/* Configuración General */
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #001122; /* Azul marino */
+    color: #ffffff; /* Blanco */
+    line-height: 1.6;
+}
+
+/* Encabezado */
+header {
+    background-color: #00bcd4; /* Cian */
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2em;
+    font-weight: 300;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav li {
+    margin-left: 20px;
+}
+
+nav a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 300;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* Carrito */
+.cart {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #00bcd4;
+    color: #ffffff;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 101;
+}
+
+/* Banner Principal */
+.banner {
+    background-image: url('https://via.placeholder.com/1920x600/001122/00bcd4?text=Banner+LuxeWear');
+    background-size: cover;
+    background-position: center;
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    animation: fadeIn 2s;
+}
+
+.banner h2 {
+    font-size: 3em;
+    margin: 0;
+    font-weight: 300;
+}
+
+.banner p {
+    font-size: 1.5em;
+    margin: 20px 0;
+}
+
+/* Botones y Secciones */
+.cta-button {
+    background-color: #00bcd4;
+    color: #ffffff;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 300;
+    transition: background-color 0.3s;
+    display: inline-block;
+}
+
+.cta-button:hover {
+    background-color: #0097a7;
+}
+
+.section {
+    padding: 50px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Cuadrículas (Grids) */
+.categories, .products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.category, .product {
+    background-color: #002233;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+    transition: transform 0.3s;
+}
+
+.category:hover {
+    transform: translateY(-10px);
+}
+
+.category img, .product img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.product img {
+    height: 250px;
+}
+
+.product h3 {
+    margin: 10px 0;
+}
+
+.product .price {
+    font-size: 1.2em;
+    color: #00bcd4;
+    margin-bottom: 15px;
+}
+
+/* Filtros y Formularios */
+.filters {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.filters select {
+    background-color: #002233;
+    color: #ffffff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    gap: 10px;
+}
+
+input {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #00bcd4;
+    background-color: #002233;
+    color: white;
+}
+
+/* Pie de página */
+footer {
+    background-color: #001122;
+    text-align: center;
+    padding: 20px;
+    margin-top: 50px;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+    }
+    nav ul {
+        flex-direction: column;
+        margin-top: 10px;
+    }
+    nav li {
+        margin: 5px 0;
+        text-align: center;
+    }
+    .banner h2 {
+        font-size: 2em;
+    }
+    .banner p {
+        font-size: 1.2em;
+    }
+}
