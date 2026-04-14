@@ -1,150 +1,708 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LuxeWear Chile - Ropa Premium</title>
-    
-    <link rel="stylesheet" href="estilos/estilo_pag_rop.css">
-    
-    <link rel="icon" href="imagenes/logo/logo.svg" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LuxeWear Chile</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{--navy:#001122;--navy2:#002233;--navy3:#003344;--cyan:#00bcd4;--cyan2:#0097a7;--cyan3:#00e5ff;--white:#ffffff;--gray:#b0bec5;--gold:#c9a84c}
+  body{font-family:'Helvetica Neue',Arial,sans-serif;background:var(--navy);color:var(--white);line-height:1.6;scroll-behavior:smooth}
+  /* HEADER */
+  header{background:rgba(0,17,34,0.95);backdrop-filter:blur(10px);padding:0 40px;height:70px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:200;border-bottom:1px solid rgba(0,188,212,0.2)}
+  .logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+  .logo svg{width:44px;height:44px}
+  .logo-text{font-size:1.4em;font-weight:200;letter-spacing:4px;color:var(--white);text-transform:uppercase}
+  .logo-text span{color:var(--cyan);font-weight:600}
+  nav ul{list-style:none;display:flex;gap:30px;align-items:center}
+  nav a{color:var(--gray);text-decoration:none;font-size:.85em;letter-spacing:2px;text-transform:uppercase;transition:color .3s}
+  nav a:hover{color:var(--cyan)}
+  .nav-cart{background:var(--cyan);color:var(--white);border:none;padding:10px 20px;border-radius:3px;cursor:pointer;font-size:.8em;letter-spacing:2px;text-transform:uppercase;transition:background .3s;display:flex;align-items:center;gap:8px}
+  .nav-cart:hover{background:var(--cyan2)}
+  .cart-count{background:var(--white);color:var(--navy);border-radius:50%;width:18px;height:18px;font-size:.7em;display:flex;align-items:center;justify-content:center;font-weight:700}
+  /* HERO */
+  #inicio{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden}
+  .hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,#001122 0%,#002233 50%,#001a33 100%);z-index:0}
+  .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,188,212,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(0,188,212,0.05) 1px,transparent 1px);background-size:60px 60px;z-index:1}
+  .hero-content{position:relative;z-index:2;max-width:800px;padding:40px 20px}
+  .hero-tag{display:inline-block;border:1px solid rgba(0,188,212,0.4);color:var(--cyan);font-size:.75em;letter-spacing:4px;text-transform:uppercase;padding:6px 20px;border-radius:2px;margin-bottom:30px}
+  .hero-title{font-size:clamp(2.5em,6vw,5em);font-weight:100;letter-spacing:6px;text-transform:uppercase;line-height:1.1;margin-bottom:20px}
+  .hero-title strong{color:var(--cyan);font-weight:300;display:block}
+  .hero-sub{color:var(--gray);font-size:1.05em;font-weight:300;letter-spacing:2px;margin-bottom:40px;max-width:500px;margin-left:auto;margin-right:auto}
+  .hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+  .btn-primary{background:var(--cyan);color:var(--white);padding:14px 36px;border-radius:3px;text-decoration:none;font-size:.85em;letter-spacing:3px;text-transform:uppercase;transition:all .3s;border:none;cursor:pointer;display:inline-block}
+  .btn-primary:hover{background:var(--cyan2);transform:translateY(-2px)}
+  .btn-outline{background:transparent;color:var(--white);padding:14px 36px;border-radius:3px;text-decoration:none;font-size:.85em;letter-spacing:3px;text-transform:uppercase;transition:all .3s;border:1px solid rgba(255,255,255,0.3);cursor:pointer;display:inline-block}
+  .btn-outline:hover{border-color:var(--cyan);color:var(--cyan);transform:translateY(-2px)}
+  .hero-scroll{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);z-index:2;text-align:center;color:var(--gray);font-size:.7em;letter-spacing:3px;text-transform:uppercase}
+  .scroll-line{width:1px;height:50px;background:linear-gradient(var(--cyan),transparent);margin:8px auto 0}
+  /* STATS */
+  .stats-bar{background:var(--navy2);border-top:1px solid rgba(0,188,212,0.15);border-bottom:1px solid rgba(0,188,212,0.15);padding:30px 40px;display:flex;justify-content:center;gap:60px;flex-wrap:wrap}
+  .stat{text-align:center}
+  .stat-num{font-size:1.8em;font-weight:200;color:var(--cyan);letter-spacing:2px}
+  .stat-label{font-size:.7em;letter-spacing:3px;text-transform:uppercase;color:var(--gray);margin-top:4px}
+  /* SECTIONS */
+  .section{padding:80px 40px;max-width:1300px;margin:0 auto}
+  .section-header{text-align:center;margin-bottom:60px}
+  .section-tag{display:inline-block;color:var(--cyan);font-size:.7em;letter-spacing:4px;text-transform:uppercase;margin-bottom:12px}
+  .section-title{font-size:clamp(1.8em,3vw,2.8em);font-weight:200;letter-spacing:4px;text-transform:uppercase}
+  .section-line{width:60px;height:1px;background:var(--cyan);margin:16px auto 0}
+  /* CATEGORÍAS */
+  #catalogo{padding-top:80px}
+  .cat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:2px}
+  .cat-card{position:relative;height:320px;overflow:hidden;cursor:pointer;background:var(--navy2)}
+  .cat-img{width:100%;height:100%;object-fit:cover;transition:transform .6s;opacity:.7}
+  .cat-card:hover .cat-img{transform:scale(1.08)}
+  .cat-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,17,34,.9) 0%,transparent 60%);display:flex;flex-direction:column;justify-content:flex-end;padding:30px;transition:all .3s}
+  .cat-card:hover .cat-overlay{background:linear-gradient(to top,rgba(0,17,34,.95) 0%,rgba(0,188,212,.1) 100%)}
+  .cat-tag{color:var(--cyan);font-size:.65em;letter-spacing:3px;text-transform:uppercase;margin-bottom:6px}
+  .cat-name{font-size:1.6em;font-weight:200;letter-spacing:3px;text-transform:uppercase}
+  .cat-desc{color:var(--gray);font-size:.85em;margin-top:6px;opacity:0;transform:translateY(10px);transition:all .3s}
+  .cat-card:hover .cat-desc{opacity:1;transform:translateY(0)}
+  /* PRODUCTOS */
+  .prod-filters{display:flex;gap:12px;margin-bottom:40px;flex-wrap:wrap;align-items:center}
+  .filter-btn{background:transparent;border:1px solid rgba(0,188,212,0.3);color:var(--gray);padding:8px 20px;border-radius:2px;cursor:pointer;font-size:.75em;letter-spacing:2px;text-transform:uppercase;transition:all .3s}
+  .filter-btn.active,.filter-btn:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(0,188,212,0.05)}
+  .filter-select{background:var(--navy2);border:1px solid rgba(0,188,212,0.3);color:var(--white);padding:8px 16px;border-radius:2px;font-size:.75em;letter-spacing:1px;margin-left:auto}
+  .prod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px}
+  .prod-card{background:var(--navy2);border:1px solid rgba(0,188,212,0.1);border-radius:4px;overflow:hidden;transition:all .3s;cursor:pointer}
+  .prod-card:hover{border-color:rgba(0,188,212,0.4);transform:translateY(-4px)}
+  .prod-img-wrap{position:relative;height:320px;overflow:hidden;background:#001830}
+  .prod-img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+  .prod-card:hover .prod-img{transform:scale(1.05)}
+  .prod-badge{position:absolute;top:16px;left:16px;background:var(--cyan);color:var(--white);font-size:.65em;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border-radius:2px}
+  .prod-badge.new{background:var(--gold)}
+  .prod-fav{position:absolute;top:16px;right:16px;background:rgba(0,17,34,.7);border:none;color:var(--gray);width:36px;height:36px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1em;transition:all .3s}
+  .prod-fav:hover,.prod-fav.active{color:#ff6b6b;background:rgba(255,107,107,.15)}
+  .prod-info{padding:20px}
+  .prod-cat{color:var(--cyan);font-size:.65em;letter-spacing:3px;text-transform:uppercase;margin-bottom:6px}
+  .prod-name{font-size:1em;font-weight:400;letter-spacing:1px;margin-bottom:8px}
+  .prod-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
+  .prod-price{font-size:1.15em;color:var(--cyan);font-weight:300}
+  .prod-price-old{font-size:.8em;color:var(--gray);text-decoration:line-through;margin-left:6px}
+  .btn-add{background:var(--cyan);border:none;color:var(--white);padding:8px 16px;border-radius:2px;font-size:.7em;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:background .3s}
+  .btn-add:hover{background:var(--cyan2)}
+  /* CARRITO LATERAL */
+  .cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:300;opacity:0;pointer-events:none;transition:opacity .3s}
+  .cart-overlay.open{opacity:1;pointer-events:all}
+  .cart-drawer{position:fixed;right:-420px;top:0;width:420px;max-width:95vw;height:100vh;background:var(--navy2);border-left:1px solid rgba(0,188,212,0.2);z-index:301;transition:right .35s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column}
+  .cart-drawer.open{right:0}
+  .cart-header-d{padding:24px;border-bottom:1px solid rgba(0,188,212,0.15);display:flex;justify-content:space-between;align-items:center}
+  .cart-header-d h3{font-size:1em;letter-spacing:3px;text-transform:uppercase;font-weight:300}
+  .cart-close{background:none;border:none;color:var(--gray);font-size:1.5em;cursor:pointer;transition:color .3s}
+  .cart-close:hover{color:var(--white)}
+  .cart-items{flex:1;overflow-y:auto;padding:20px}
+  .cart-item{display:flex;gap:12px;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,.06)}
+  .cart-item-img{width:70px;height:80px;object-fit:cover;border-radius:2px;background:var(--navy3)}
+  .cart-item-info{flex:1}
+  .cart-item-name{font-size:.85em;margin-bottom:4px}
+  .cart-item-price{color:var(--cyan);font-size:.9em}
+  .cart-item-qty{display:flex;align-items:center;gap:10px;margin-top:8px}
+  .qty-btn{background:var(--navy3);border:1px solid rgba(0,188,212,0.2);color:var(--white);width:24px;height:24px;border-radius:2px;cursor:pointer;font-size:1em;display:flex;align-items:center;justify-content:center}
+  .cart-item-remove{background:none;border:none;color:var(--gray);font-size:.75em;cursor:pointer;letter-spacing:1px;text-transform:uppercase;margin-top:6px;transition:color .3s}
+  .cart-item-remove:hover{color:#ff6b6b}
+  .cart-footer-d{padding:24px;border-top:1px solid rgba(0,188,212,0.15)}
+  .cart-total{display:flex;justify-content:space-between;margin-bottom:20px;font-size:1em}
+  .cart-total span:last-child{color:var(--cyan);font-size:1.2em}
+  .empty-cart{text-align:center;padding:60px 20px;color:var(--gray)}
+  .empty-cart-icon{font-size:3em;margin-bottom:16px;opacity:.4}
+  /* PERFIL / AUTH */
+  #perfil{background:var(--navy2);padding:80px 0}
+  .auth-container{max-width:1000px;margin:0 auto;padding:0 40px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+  .auth-info h2{font-size:clamp(1.8em,3vw,2.5em);font-weight:200;letter-spacing:3px;text-transform:uppercase;line-height:1.2;margin-bottom:20px}
+  .auth-info p{color:var(--gray);line-height:1.8;margin-bottom:30px}
+  .auth-features{list-style:none;display:flex;flex-direction:column;gap:12px}
+  .auth-features li{display:flex;align-items:center;gap:12px;color:var(--gray);font-size:.9em}
+  .auth-features li::before{content:'';width:20px;height:1px;background:var(--cyan);flex-shrink:0}
+  .auth-box{background:var(--navy);border:1px solid rgba(0,188,212,0.15);border-radius:4px;padding:40px}
+  .auth-tabs{display:flex;gap:0;margin-bottom:30px;border-bottom:1px solid rgba(0,188,212,0.15)}
+  .auth-tab{background:none;border:none;color:var(--gray);padding:12px 24px;font-size:.8em;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .3s}
+  .auth-tab.active{color:var(--cyan);border-bottom-color:var(--cyan)}
+  .auth-form{display:none;flex-direction:column;gap:16px}
+  .auth-form.active{display:flex}
+  .form-group{display:flex;flex-direction:column;gap:6px}
+  .form-group label{font-size:.75em;letter-spacing:2px;text-transform:uppercase;color:var(--gray)}
+  .form-group input{background:var(--navy2);border:1px solid rgba(0,188,212,0.2);color:var(--white);padding:12px 16px;border-radius:2px;font-size:.9em;transition:border .3s;outline:none}
+  .form-group input:focus{border-color:var(--cyan)}
+  .form-group input::placeholder{color:rgba(255,255,255,.3)}
+  .form-divider{display:flex;align-items:center;gap:12px;color:var(--gray);font-size:.75em;letter-spacing:2px}
+  .form-divider::before,.form-divider::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.1)}
+  .auth-msg{font-size:.8em;text-align:center;margin-top:8px;min-height:20px;color:var(--cyan)}
+  /* CHECKOUT */
+  #checkout{padding:80px 0}
+  .checkout-container{max-width:1100px;margin:0 auto;padding:0 40px;display:grid;grid-template-columns:1fr 380px;gap:40px;align-items:start}
+  .checkout-steps{display:flex;gap:0;margin-bottom:40px}
+  .step{display:flex;align-items:center;gap:10px;font-size:.75em;letter-spacing:2px;text-transform:uppercase;color:var(--gray)}
+  .step.active{color:var(--cyan)}
+  .step.done{color:var(--gray)}
+  .step-num{width:28px;height:28px;border-radius:50%;border:1px solid currentColor;display:flex;align-items:center;justify-content:center;font-size:.9em;flex-shrink:0}
+  .step.active .step-num{background:var(--cyan);border-color:var(--cyan);color:var(--white)}
+  .step.done .step-num{background:rgba(0,188,212,.2);border-color:var(--cyan)}
+  .step-sep{flex:1;height:1px;background:rgba(255,255,255,.1);margin:0 10px}
+  .checkout-form-title{font-size:.85em;letter-spacing:3px;text-transform:uppercase;color:var(--cyan);margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid rgba(0,188,212,.15)}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .checkout-group{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+  .checkout-group label{font-size:.72em;letter-spacing:2px;text-transform:uppercase;color:var(--gray)}
+  .checkout-group input,.checkout-group select{background:var(--navy2);border:1px solid rgba(0,188,212,0.2);color:var(--white);padding:12px 16px;border-radius:2px;font-size:.9em;outline:none;transition:border .3s;width:100%}
+  .checkout-group input:focus,.checkout-group select:focus{border-color:var(--cyan)}
+  .checkout-group select option{background:var(--navy2)}
+  .order-summary{background:var(--navy2);border:1px solid rgba(0,188,212,.15);border-radius:4px;padding:28px;position:sticky;top:90px}
+  .order-title{font-size:.8em;letter-spacing:3px;text-transform:uppercase;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid rgba(0,188,212,.15)}
+  .order-item{display:flex;justify-content:space-between;margin-bottom:12px;font-size:.85em}
+  .order-item span:first-child{color:var(--gray)}
+  .order-divider{height:1px;background:rgba(255,255,255,.08);margin:16px 0}
+  .order-total-row{display:flex;justify-content:space-between;font-size:1em;margin-bottom:8px}
+  .order-total-row.final{font-size:1.1em;color:var(--cyan);margin-top:12px;padding-top:12px;border-top:1px solid rgba(0,188,212,.2)}
+  .pay-methods{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap}
+  .pay-method{background:var(--navy3);border:1px solid rgba(0,188,212,.15);border-radius:3px;padding:8px 16px;cursor:pointer;font-size:.75em;letter-spacing:1px;text-transform:uppercase;color:var(--gray);transition:all .3s}
+  .pay-method.active{border-color:var(--cyan);color:var(--cyan)}
+  .secure-badge{display:flex;align-items:center;gap:8px;color:var(--gray);font-size:.72em;margin-top:16px;justify-content:center}
+  /* MODAL ÉXITO */
+  .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:400;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
+  .modal-overlay.open{opacity:1;pointer-events:all}
+  .modal{background:var(--navy2);border:1px solid rgba(0,188,212,.2);border-radius:6px;padding:50px 40px;text-align:center;max-width:440px;width:90%}
+  .modal-icon{width:70px;height:70px;border-radius:50%;background:rgba(0,188,212,.1);border:1px solid rgba(0,188,212,.3);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-size:1.8em}
+  .modal h3{font-size:1.4em;font-weight:300;letter-spacing:3px;text-transform:uppercase;margin-bottom:12px}
+  .modal p{color:var(--gray);line-height:1.7;margin-bottom:28px}
+  /* TOAST */
+  .toast-wrap{position:fixed;bottom:30px;right:30px;z-index:500;display:flex;flex-direction:column;gap:10px}
+  .toast{background:var(--navy2);border:1px solid rgba(0,188,212,.3);border-left:3px solid var(--cyan);color:var(--white);padding:14px 20px;border-radius:3px;font-size:.85em;letter-spacing:1px;animation:slideIn .3s ease;max-width:300px}
+  @keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+  /* FOOTER */
+  footer{background:var(--navy2);border-top:1px solid rgba(0,188,212,.15);padding:60px 40px 30px}
+  .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;max-width:1300px;margin:0 auto 40px}
+  .footer-brand p{color:var(--gray);font-size:.85em;line-height:1.8;margin-top:16px;max-width:280px}
+  .footer-col h4{font-size:.7em;letter-spacing:3px;text-transform:uppercase;color:var(--cyan);margin-bottom:16px}
+  .footer-col ul{list-style:none}
+  .footer-col ul li{margin-bottom:8px}
+  .footer-col ul li a{color:var(--gray);text-decoration:none;font-size:.85em;transition:color .3s}
+  .footer-col ul li a:hover{color:var(--white)}
+  .footer-bottom{max-width:1300px;margin:0 auto;padding-top:24px;border-top:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;align-items:center;color:var(--gray);font-size:.75em;flex-wrap:wrap;gap:12px}
+  /* NOTIFICATION DOT */
+  @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
+  /* MOBILE */
+  @media(max-width:768px){
+    header{padding:0 20px}
+    nav ul{gap:16px}
+    .hero-title{font-size:2.5em}
+    .stats-bar{gap:30px;padding:24px 20px}
+    .section{padding:60px 20px}
+    .auth-container{grid-template-columns:1fr;gap:30px}
+    .checkout-container{grid-template-columns:1fr}
+    .footer-grid{grid-template-columns:1fr 1fr}
+    .form-row{grid-template-columns:1fr}
+  }
+</style>
 </head>
 <body>
-    <header>
-        <h1>LuxeWear Chile</h1>
-        <nav>
-            <ul>
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#catalogo">Catálogo</a></li>
-                <li><a href="#perfil">Perfil</a></li>
-                <li><a href="#checkout">Checkout</a></li>
-            </ul>
-        </nav>
-    </header>
 
-    <div class="cart" onclick="alert('Carrito de compras - Funcionalidad básica')">🛒</div>
-    
-    <section id="inicio" class="banner">
-        <div>
-            <h2>Ropa Premium para el Estilo Chileno</h2>
-            <p>Descubre colecciones exclusivas de casual, formal, deportiva y lujo.</p>
-            <a href="#catalogo" class="cta-button">Explorar Colecciones</a>
+<header>
+  <a href="#inicio" class="logo">
+    <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+      <rect width="44" height="44" rx="8" fill="#001f3f"/>
+      <text x="5" y="32" font-family="Arial" font-size="20" fill="#00cfff" font-weight="bold">V</text>
+      <text x="23" y="32" font-family="Arial" font-size="20" fill="#ffffff" font-weight="300">L</text>
+    </svg>
+    <span class="logo-text"><span>Luxe</span>Wear</span>
+  </a>
+  <nav>
+    <ul>
+      <li><a href="#inicio">Inicio</a></li>
+      <li><a href="#catalogo">Catálogo</a></li>
+      <li><a href="#perfil">Perfil</a></li>
+      <li><a href="#checkout">Checkout</a></li>
+    </ul>
+  </nav>
+  <button class="nav-cart" onclick="toggleCart()">
+    <span>🛒</span> Carrito
+    <span class="cart-count" id="cartCount">0</span>
+  </button>
+</header>
+
+<!-- HERO -->
+<section id="inicio">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Colección 2026 · Chile</div>
+    <h1 class="hero-title">
+      Estilo sin<br><strong>Compromiso</strong>
+    </h1>
+    <p class="hero-sub">Prendas de lujo para quienes exigen lo mejor. Diseño, exclusividad y sofisticación en cada detalle.</p>
+    <div class="hero-btns">
+      <a href="#catalogo" class="btn-primary">Explorar Colección</a>
+      <a href="#perfil" class="btn-outline">Acceso Exclusivo</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    Descubrir
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat"><div class="stat-num">+2.400</div><div class="stat-label">Clientes Premium</div></div>
+  <div class="stat"><div class="stat-num">180+</div><div class="stat-label">Productos Exclusivos</div></div>
+  <div class="stat"><div class="stat-num">12</div><div class="stat-label">Años en el Mercado</div></div>
+  <div class="stat"><div class="stat-num">98%</div><div class="stat-label">Satisfacción</div></div>
+</div>
+
+<!-- CATÁLOGO: CATEGORÍAS -->
+<section id="catalogo">
+  <div class="section-header" style="padding:60px 40px 0;max-width:1300px;margin:0 auto">
+    <div class="section-tag">Nuestras Líneas</div>
+    <h2 class="section-title">Colecciones</h2>
+    <div class="section-line"></div>
+  </div>
+  <div style="margin-top:40px" class="cat-grid">
+    <div class="cat-card" onclick="filterProducts('Casual')">
+      <img class="cat-img" src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600&q=80" alt="Casual">
+      <div class="cat-overlay">
+        <div class="cat-tag">Línea</div>
+        <div class="cat-name">Casual</div>
+        <div class="cat-desc">Comodidad con clase para cada día.</div>
+      </div>
+    </div>
+    <div class="cat-card" onclick="filterProducts('Formal')">
+      <img class="cat-img" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80" alt="Formal">
+      <div class="cat-overlay">
+        <div class="cat-tag">Línea</div>
+        <div class="cat-name">Formal</div>
+        <div class="cat-desc">Elegancia profesional a otro nivel.</div>
+      </div>
+    </div>
+    <div class="cat-card" onclick="filterProducts('Deportiva')">
+      <img class="cat-img" src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80" alt="Deportiva">
+      <div class="cat-overlay">
+        <div class="cat-tag">Línea</div>
+        <div class="cat-name">Deportiva</div>
+        <div class="cat-desc">Alto rendimiento, diseño premium.</div>
+      </div>
+    </div>
+    <div class="cat-card" onclick="filterProducts('Lujo')">
+      <img class="cat-img" src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=600&q=80" alt="Lujo">
+      <div class="cat-overlay">
+        <div class="cat-tag">Línea</div>
+        <div class="cat-name">Lujo</div>
+        <div class="cat-desc">Exclusividad y sofisticación absoluta.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTOS -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-tag">Selección Exclusiva</div>
+    <h2 class="section-title">Productos Destacados</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="prod-filters">
+    <button class="filter-btn active" onclick="filterProducts('Todos',this)">Todos</button>
+    <button class="filter-btn" onclick="filterProducts('Casual',this)">Casual</button>
+    <button class="filter-btn" onclick="filterProducts('Formal',this)">Formal</button>
+    <button class="filter-btn" onclick="filterProducts('Deportiva',this)">Deportiva</button>
+    <button class="filter-btn" onclick="filterProducts('Lujo',this)">Lujo</button>
+    <select class="filter-select" onchange="sortProducts(this.value)">
+      <option value="">Ordenar por</option>
+      <option value="asc">Menor precio</option>
+      <option value="desc">Mayor precio</option>
+      <option value="new">Nuevo ingreso</option>
+    </select>
+  </div>
+  <div class="prod-grid" id="prodGrid"></div>
+</section>
+
+<!-- PERFIL / AUTH -->
+<section id="perfil">
+  <div class="auth-container">
+    <div class="auth-info">
+      <h2>Acceso<br>Exclusivo</h2>
+      <p style="color:var(--gray);line-height:1.8;margin-bottom:30px">Únete a la comunidad LuxeWear Chile y accede a beneficios únicos, descuentos especiales y preventas de colecciones exclusivas.</p>
+      <ul class="auth-features">
+        <li>Descuentos exclusivos para miembros</li>
+        <li>Acceso anticipado a nuevas colecciones</li>
+        <li>Programa de puntos LuxeRewards</li>
+        <li>Envío express gratuito en compras +$200.000</li>
+        <li>Asesoría de imagen personalizada</li>
+      </ul>
+    </div>
+    <div class="auth-box">
+      <div class="auth-tabs">
+        <button class="auth-tab active" onclick="switchTab('login')">Iniciar Sesión</button>
+        <button class="auth-tab" onclick="switchTab('register')">Registrarse</button>
+      </div>
+      <div class="auth-form active" id="loginForm">
+        <div class="form-group">
+          <label>Correo Electrónico</label>
+          <input type="email" placeholder="tu@email.com" id="loginEmail">
         </div>
-    </section>
-    
-    <section class="section">
-        <h2>Promociones Destacadas</h2>
-        <div class="products">
-            <div class="product">
-                <img src="imagenes/zapatillas/zapa2.jpg" alt="Producto 1">
-                <h3>Camisa Formal Premium</h3>
-                <p class="price">$150.000 CLP</p>
-                <a href="#" class="cta-button">Comprar Ahora</a>
-            </div>
-            <div class="product">
-                <img src="imagenes/zapatillas/zapa1.jpg" alt="Producto 2">
-                <h3>Zapatillas Deportivas Lujo</h3>
-                <p class="price">$250.000 CLP</p>
-                <a href="#" class="cta-button">Comprar Ahora</a>
-            </div>
-            <div class="product">
-                <img src="imagenes/zapatillas/zapa3.jpg" alt="Producto 3">
-                <h3>Vestido de Noche Elegante</h3>
-                <p class="price">$350.000 CLP</p>
-                <a href="#" class="cta-button">Comprar Ahora</a>
-            </div>
+        <div class="form-group">
+          <label>Contraseña</label>
+          <input type="password" placeholder="••••••••" id="loginPass">
         </div>
-    </section>
-    
-    <section id="catalogo" class="section">
-        <h2>Catálogo de Productos</h2>
-        <div class="filters">
-            <select>
-                <option>Categoría</option>
-                <option>Casual</option>
-                <option>Formal</option>
-                <option>Deportiva</option>
-                <option>Lujo</option>
+        <button class="btn-primary" style="width:100%;border:none" onclick="handleLogin()">Ingresar</button>
+        <div class="auth-msg" id="loginMsg"></div>
+        <div class="form-divider">o</div>
+        <p style="text-align:center;font-size:.78em;color:var(--gray)">¿Olvidaste tu contraseña? <a href="#" style="color:var(--cyan)">Recuperar acceso</a></p>
+      </div>
+      <div class="auth-form" id="registerForm">
+        <div class="form-group">
+          <label>Nombre Completo</label>
+          <input type="text" placeholder="Tu nombre" id="regName">
+        </div>
+        <div class="form-group">
+          <label>Correo Electrónico</label>
+          <input type="email" placeholder="tu@email.com" id="regEmail">
+        </div>
+        <div class="form-group">
+          <label>Contraseña</label>
+          <input type="password" placeholder="Mínimo 8 caracteres" id="regPass">
+        </div>
+        <div class="form-group">
+          <label>Confirmar Contraseña</label>
+          <input type="password" placeholder="Repite tu contraseña" id="regPass2">
+        </div>
+        <button class="btn-primary" style="width:100%;border:none" onclick="handleRegister()">Crear Cuenta</button>
+        <div class="auth-msg" id="registerMsg"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHECKOUT -->
+<section id="checkout">
+  <div style="text-align:center;padding:0 40px 50px;max-width:1300px;margin:0 auto">
+    <div class="section-tag">Compra Segura</div>
+    <h2 class="section-title">Proceso de Pago</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="checkout-container">
+    <div>
+      <div class="checkout-steps">
+        <div class="step active"><span class="step-num">1</span> Datos</div>
+        <div class="step-sep"></div>
+        <div class="step" id="step2"><span class="step-num">2</span> Envío</div>
+        <div class="step-sep"></div>
+        <div class="step" id="step3"><span class="step-num">3</span> Pago</div>
+      </div>
+      <div id="checkoutStep1">
+        <div class="checkout-form-title">Información Personal</div>
+        <div class="form-row">
+          <div class="checkout-group"><label>Nombre</label><input type="text" placeholder="María" id="ckName"></div>
+          <div class="checkout-group"><label>Apellido</label><input type="text" placeholder="González" id="ckLastname"></div>
+        </div>
+        <div class="checkout-group"><label>Email</label><input type="email" placeholder="tu@email.com" id="ckEmail"></div>
+        <div class="checkout-group"><label>Teléfono</label><input type="tel" placeholder="+56 9 1234 5678" id="ckPhone"></div>
+        <div class="checkout-form-title" style="margin-top:24px">Dirección de Envío</div>
+        <div class="checkout-group"><label>Dirección</label><input type="text" placeholder="Av. Apoquindo 1234" id="ckAddr"></div>
+        <div class="form-row">
+          <div class="checkout-group"><label>Ciudad</label>
+            <select id="ckCity">
+              <option>Santiago</option><option>Valparaíso</option><option>Viña del Mar</option><option>Concepción</option><option>Antofagasta</option>
             </select>
-            <select>
-                <option>Talla</option>
-                <option>S</option>
-                <option>M</option>
-                <option>L</option>
-                <option>XL</option>
-            </select>
-            <select>
-                <option>Precio</option>
-                <option>$0 - $100.000</option>
-                <option>$100.000 - $300.000</option>
-                <option>$300.000+</option>
-            </select>
+          </div>
+          <div class="checkout-group"><label>Código Postal</label><input type="text" placeholder="7550000" id="ckZip"></div>
         </div>
-        <div class="categories">
-            <div class="category">
-                <img src="imagenes/chaquetas/chaqueta3.jpg" alt="Casual">
-                <h3>Casual</h3>
-                <p>Ropa cómoda para el día a día.</p>
-            </div>
-            <div class="category">
-                <img src="imagenes/trajes/traje1.jpg" alt="Formal">
-                <h3>Formal</h3>
-                <p>Estilo profesional y elegante.</p>
-            </div>
-            <div class="category">
-                <img src="https://via.placeholder.com/250x200/002233/00bcd4?text=Deportiva" alt="Deportiva">
-                <h3>Deportiva</h3>
-                <p>Performance y comodidad.</p>
-            </div>
-            <div class="category">
-                <img src="https://via.placeholder.com/250x200/002233/00bcd4?text=Lujo" alt="Lujo">
-                <h3>Lujo</h3>
-                <p>Exclusividad y sofisticación.</p>
-            </div>
+        <button class="btn-primary" style="width:100%;border:none;margin-top:8px" onclick="goStep2()">Continuar al Pago →</button>
+      </div>
+      <div id="checkoutStep2" style="display:none">
+        <div class="checkout-form-title">Método de Pago</div>
+        <div class="pay-methods">
+          <div class="pay-method active" onclick="selectPay(this)">Tarjeta Crédito</div>
+          <div class="pay-method" onclick="selectPay(this)">Tarjeta Débito</div>
+          <div class="pay-method" onclick="selectPay(this)">WebPay</div>
+          <div class="pay-method" onclick="selectPay(this)">Transferencia</div>
         </div>
-        <div class="products" style="margin-top: 30px;">
-            <div class="product">
-                <img src="imagenes/chaquetas/chaqueta2.jpg" alt="Producto 4">
-                <h3>Chaqueta Casual</h3>
-                <p class="price">$200.000 CLP</p>
-                <a href="#" class="cta-button">Ver Detalles</a>
-            </div>
+        <div class="checkout-group"><label>Número de Tarjeta</label><input type="text" placeholder="1234 5678 9101 1121" id="ckCard" maxlength="19" oninput="formatCard(this)"></div>
+        <div class="form-row">
+          <div class="checkout-group"><label>Vencimiento</label><input type="text" placeholder="MM / AA" id="ckExp" maxlength="7"></div>
+          <div class="checkout-group"><label>CVV</label><input type="text" placeholder="•••" id="ckCvv" maxlength="3"></div>
         </div>
-    </section>
-    
-    <section id="perfil" class="section">
-        <h2>Perfil de Usuario</h2>
-        <p>Registro e inicio de sesión simulados.</p>
-        <form>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-            <label for="password">Contraseña:</label>
-            <input type="password" id="password" name="password" required>
-            <button type="submit" class="cta-button" style="border:none; cursor:pointer;">Iniciar Sesión</button>
-        </form>
-    </section>
-    
-    <section id="checkout" class="section">
-        <h2>Proceso de Checkout</h2>
-        <p>Pago online seguro simulado.</p>
-        <form>
-            <label for="card">Número de Tarjeta:</label>
-            <input type="text" id="card" name="card" placeholder="1234 5678 9101 1121" required>
-            <button type="submit" class="cta-button" style="border:none; cursor:pointer;">Pagar</button>
-        </form>
-    </section>
-    
-    <footer>
-        <p>&copy; 2026 LuxeWear Chile. Todos los derechos reservados.</p>
-    </footer>
-    
-    <script>
-        // JS para interacción básica
-        document.querySelectorAll('.category').forEach(cat => {
-            cat.addEventListener('click', () => {
-                alert('Filtrar por categoría: ' + cat.querySelector('h3').textContent);
-            });
-        });
-    </script>
+        <div class="checkout-group"><label>Nombre en la Tarjeta</label><input type="text" placeholder="MARIA GONZALEZ" id="ckCardName"></div>
+        <div class="secure-badge">🔒 Pago 100% seguro · Encriptación SSL 256-bit · PCI DSS</div>
+        <div style="display:flex;gap:12px;margin-top:20px">
+          <button class="btn-outline" style="border:1px solid rgba(255,255,255,.2)" onclick="backStep1()">← Volver</button>
+          <button class="btn-primary" style="flex:1;border:none" onclick="processPay()">Confirmar Compra · <span id="payTotal">$0</span></button>
+        </div>
+      </div>
+    </div>
+    <div class="order-summary">
+      <div class="order-title">Resumen del Pedido</div>
+      <div id="orderItems"><p style="color:var(--gray);font-size:.85em">No hay productos en el carrito.</p></div>
+      <div class="order-divider"></div>
+      <div class="order-total-row"><span style="color:var(--gray);font-size:.85em">Subtotal</span><span id="oSubtotal">$0</span></div>
+      <div class="order-total-row"><span style="color:var(--gray);font-size:.85em">Envío</span><span style="color:#4caf50;font-size:.85em">Gratis</span></div>
+      <div class="order-total-row final"><span>Total</span><span id="oTotal">$0</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div style="display:flex;align-items:center;gap:10px">
+        <svg viewBox="0 0 44 44" width="36" height="36" xmlns="http://www.w3.org/2000/svg">
+          <rect width="44" height="44" rx="8" fill="#001f3f"/>
+          <text x="5" y="32" font-family="Arial" font-size="20" fill="#00cfff" font-weight="bold">V</text>
+          <text x="23" y="32" font-family="Arial" font-size="20" fill="#ffffff" font-weight="300">L</text>
+        </svg>
+        <span style="font-size:1.2em;font-weight:200;letter-spacing:4px;text-transform:uppercase"><span style="color:var(--cyan);font-weight:600">Luxe</span>Wear</span>
+      </div>
+      <p>Moda de lujo para el Chile que exige lo mejor. Diseño, calidad y exclusividad en cada pieza de nuestra colección.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Colecciones</h4>
+      <ul>
+        <li><a href="#">Casual Premium</a></li>
+        <li><a href="#">Formal Elite</a></li>
+        <li><a href="#">Sport Luxe</a></li>
+        <li><a href="#">Alta Costura</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Servicio</h4>
+      <ul>
+        <li><a href="#">Guía de Tallas</a></li>
+        <li><a href="#">Devoluciones</a></li>
+        <li><a href="#">Envíos</a></li>
+        <li><a href="#">Contacto</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Empresa</h4>
+      <ul>
+        <li><a href="#">Nuestra Historia</a></li>
+        <li><a href="#">Sustentabilidad</a></li>
+        <li><a href="#">Trabaja con Nosotros</a></li>
+        <li><a href="#">Prensa</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 LuxeWear Chile. Todos los derechos reservados.</span>
+    <span>RUT: 76.xxx.xxx-x · Santiago, Chile</span>
+  </div>
+</footer>
+
+<!-- CARRITO LATERAL -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header-d">
+    <h3>Tu Carrito</h3>
+    <button class="cart-close" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItemsEl"></div>
+  <div class="cart-footer-d">
+    <div class="cart-total"><span>Total</span><span id="cartTotalEl">$0</span></div>
+    <a href="#checkout" class="btn-primary" style="width:100%;text-align:center;display:block" onclick="toggleCart()">Ir al Checkout →</a>
+  </div>
+</div>
+
+<!-- MODAL ÉXITO -->
+<div class="modal-overlay" id="successModal">
+  <div class="modal">
+    <div class="modal-icon">✓</div>
+    <h3>¡Compra Exitosa!</h3>
+    <p>Tu pedido ha sido procesado correctamente. Recibirás un correo de confirmación con el número de seguimiento.</p>
+    <button class="btn-primary" style="border:none;width:100%" onclick="closeModal()">Volver al Inicio</button>
+  </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-wrap" id="toastWrap"></div>
+
+<script>
+const PRODUCTS=[
+  {id:1,name:'Camisa Oxford Premium',cat:'Formal',price:149000,img:'https://images.unsplash.com/photo-1598032895397-b9472444bf93?w=400&q=80',badge:'Bestseller',isNew:false},
+  {id:2,name:'Zapatillas Sport Elite',cat:'Deportiva',price:249000,img:'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=80',badge:'',isNew:true},
+  {id:3,name:'Vestido Noche Noir',cat:'Lujo',price:389000,img:'https://images.unsplash.com/photo-1568252542512-9fe8fe9c87bb?w=400&q=80',badge:'Exclusivo',isNew:false},
+  {id:4,name:'Chaqueta Urban Premium',cat:'Casual',price:199000,img:'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400&q=80',badge:'',isNew:true},
+  {id:5,name:'Traje Slim Fit Black',cat:'Formal',price:499000,img:'https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=400&q=80',badge:'Premium',isNew:false},
+  {id:6,name:'Set Deportivo Carbon',cat:'Deportiva',price:179000,img:'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&q=80',badge:'',isNew:false},
+  {id:7,name:'Abrigo Cashmere Luxe',cat:'Lujo',price:699000,img:'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=400&q=80',badge:'Exclusivo',isNew:true},
+  {id:8,name:'Jeans Premium Slim',cat:'Casual',price:129000,img:'https://images.unsplash.com/photo-1542272604-787c3835535d?w=400&q=80',badge:'',isNew:false},
+];
+
+let cart=[],favs=new Set(),filtered=[...PRODUCTS];
+
+function fmtPrice(n){return '$'+n.toLocaleString('es-CL')+' CLP'}
+
+function renderProducts(list){
+  const g=document.getElementById('prodGrid');
+  if(!list.length){g.innerHTML='<p style="color:var(--gray);grid-column:1/-1;text-align:center;padding:40px">No hay productos en esta categoría.</p>';return}
+  g.innerHTML=list.map(p=>`
+    <div class="prod-card">
+      <div class="prod-img-wrap">
+        <img class="prod-img" src="${p.img}" alt="${p.name}" loading="lazy">
+        ${p.badge?`<span class="prod-badge${p.isNew?' new':''}">${p.badge}</span>`:''}
+        ${p.isNew&&!p.badge?'<span class="prod-badge new">Nuevo</span>':''}
+        <button class="prod-fav${favs.has(p.id)?' active':''}" onclick="toggleFav(${p.id},this)">♥</button>
+      </div>
+      <div class="prod-info">
+        <div class="prod-cat">${p.cat}</div>
+        <div class="prod-name">${p.name}</div>
+        <div class="prod-bottom">
+          <div><span class="prod-price">${fmtPrice(p.price)}</span></div>
+          <button class="btn-add" onclick="addToCart(${p.id})">+ Agregar</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterProducts(cat,btn){
+  if(btn){document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active')}
+  filtered=cat==='Todos'?[...PRODUCTS]:PRODUCTS.filter(p=>p.cat===cat);
+  renderProducts(filtered);
+  if(cat!=='Todos')document.getElementById('catalogo').scrollIntoView({behavior:'smooth'});
+}
+
+function sortProducts(v){
+  if(!v)return;
+  const sorted=[...filtered];
+  if(v==='asc')sorted.sort((a,b)=>a.price-b.price);
+  else if(v==='desc')sorted.sort((a,b)=>b.price-a.price);
+  else if(v==='new')sorted.sort((a,b)=>b.isNew-a.isNew);
+  renderProducts(sorted);
+}
+
+function toggleFav(id,btn){
+  if(favs.has(id)){favs.delete(id);btn.classList.remove('active')}
+  else{favs.add(id);btn.classList.add('active');toast('Agregado a favoritos ♥')}
+}
+
+function addToCart(id){
+  const p=PRODUCTS.find(x=>x.id===id);
+  const ex=cart.find(x=>x.id===id);
+  if(ex)ex.qty++;
+  else cart.push({...p,qty:1});
+  updateCart();
+  toast(`${p.name} agregado al carrito`);
+}
+
+function updateCart(){
+  const count=cart.reduce((s,x)=>s+x.qty,0);
+  const total=cart.reduce((s,x)=>s+x.price*x.qty,0);
+  document.getElementById('cartCount').textContent=count;
+  document.getElementById('cartTotalEl').textContent=fmtPrice(total);
+  document.getElementById('payTotal').textContent=fmtPrice(total);
+  const el=document.getElementById('cartItemsEl');
+  if(!cart.length){el.innerHTML='<div class="empty-cart"><div class="empty-cart-icon">🛒</div><p>Tu carrito está vacío.<br>Agrega productos para comenzar.</p></div>';return}
+  el.innerHTML=cart.map(x=>`
+    <div class="cart-item">
+      <img class="cart-item-img" src="${x.img}" alt="${x.name}">
+      <div class="cart-item-info">
+        <div class="cart-item-name">${x.name}</div>
+        <div class="cart-item-price">${fmtPrice(x.price)}</div>
+        <div class="cart-item-qty">
+          <button class="qty-btn" onclick="changeQty(${x.id},-1)">−</button>
+          <span style="font-size:.85em">${x.qty}</span>
+          <button class="qty-btn" onclick="changeQty(${x.id},1)">+</button>
+        </div>
+        <button class="cart-item-remove" onclick="removeFromCart(${x.id})">Eliminar</button>
+      </div>
+    </div>
+  `).join('');
+  const items=document.getElementById('orderItems');
+  items.innerHTML=cart.map(x=>`<div class="order-item"><span>${x.name} ×${x.qty}</span><span>${fmtPrice(x.price*x.qty)}</span></div>`).join('');
+  document.getElementById('oSubtotal').textContent=fmtPrice(total);
+  document.getElementById('oTotal').textContent=fmtPrice(total);
+}
+
+function changeQty(id,d){
+  const i=cart.findIndex(x=>x.id===id);
+  cart[i].qty+=d;
+  if(cart[i].qty<=0)cart.splice(i,1);
+  updateCart();
+}
+
+function removeFromCart(id){cart=cart.filter(x=>x.id!==id);updateCart()}
+
+function toggleCart(){
+  document.getElementById('cartDrawer').classList.toggle('open');
+  document.getElementById('cartOverlay').classList.toggle('open');
+}
+
+function switchTab(tab){
+  document.querySelectorAll('.auth-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.auth-form').forEach(f=>f.classList.remove('active'));
+  document.getElementById(tab+'Form').classList.add('active');
+  document.querySelector(`.auth-tab:nth-child(${tab==='login'?1:2})`).classList.add('active');
+}
+
+function handleLogin(){
+  const e=document.getElementById('loginEmail').value;
+  const p=document.getElementById('loginPass').value;
+  const msg=document.getElementById('loginMsg');
+  if(!e||!p){msg.textContent='Completa todos los campos.';msg.style.color='#ff6b6b';return}
+  if(e.includes('@')&&p.length>=6){msg.textContent='¡Bienvenido de vuelta!';msg.style.color='var(--cyan)';toast('Sesión iniciada correctamente ✓')}
+  else{msg.textContent='Email o contraseña incorrectos.';msg.style.color='#ff6b6b'}
+}
+
+function handleRegister(){
+  const n=document.getElementById('regName').value;
+  const e=document.getElementById('regEmail').value;
+  const p=document.getElementById('regPass').value;
+  const p2=document.getElementById('regPass2').value;
+  const msg=document.getElementById('registerMsg');
+  if(!n||!e||!p||!p2){msg.textContent='Completa todos los campos.';msg.style.color='#ff6b6b';return}
+  if(p!==p2){msg.textContent='Las contraseñas no coinciden.';msg.style.color='#ff6b6b';return}
+  if(p.length<8){msg.textContent='La contraseña debe tener al menos 8 caracteres.';msg.style.color='#ff6b6b';return}
+  msg.textContent='¡Cuenta creada exitosamente! Bienvenido/a.';msg.style.color='var(--cyan)';
+  toast('Cuenta creada. ¡Bienvenido/a a LuxeWear! ✓');
+}
+
+function goStep2(){
+  const f=[document.getElementById('ckName'),document.getElementById('ckEmail'),document.getElementById('ckAddr')];
+  if(f.some(x=>!x.value)){toast('Completa los datos de envío antes de continuar.');return}
+  document.getElementById('checkoutStep1').style.display='none';
+  document.getElementById('checkoutStep2').style.display='block';
+  document.getElementById('step2').classList.add('active');
+}
+
+function backStep1(){
+  document.getElementById('checkoutStep2').style.display='none';
+  document.getElementById('checkoutStep1').style.display='block';
+}
+
+function selectPay(el){document.querySelectorAll('.pay-method').forEach(m=>m.classList.remove('active'));el.classList.add('active')}
+
+function formatCard(el){
+  let v=el.value.replace(/\D/g,'').substring(0,16);
+  el.value=v.replace(/(\d{4})/g,'$1 ').trim();
+}
+
+function processPay(){
+  const card=document.getElementById('ckCard').value.replace(/\s/g,'');
+  if(card.length<16){toast('Ingresa un número de tarjeta válido.');return}
+  if(!cart.length){toast('Tu carrito está vacío.');return}
+  document.getElementById('successModal').classList.add('open');
+  document.getElementById('step3').classList.add('active');
+}
+
+function closeModal(){
+  document.getElementById('successModal').classList.remove('open');
+  cart=[];updateCart();
+  document.getElementById('checkoutStep2').style.display='none';
+  document.getElementById('checkoutStep1').style.display='block';
+  document.getElementById('step2').classList.remove('active');
+  document.getElementById('step3').classList.remove('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toast(msg){
+  const w=document.getElementById('toastWrap');
+  const t=document.createElement('div');
+  t.className='toast';t.textContent=msg;
+  w.appendChild(t);
+  setTimeout(()=>{t.style.animation='slideIn .3s ease reverse';setTimeout(()=>t.remove(),300)},3000);
+}
+
+renderProducts(PRODUCTS);
+updateCart();
+</script>
 </body>
 </html>
