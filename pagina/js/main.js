@@ -165,9 +165,6 @@ const cerrarSesion = () => {
   saveState();
   actualizarDOM('perfil');
 };
-  saveState();
-  actualizarDOM('perfil');
-};
 
 // ==========================================
 // 7. RENDERIZADO DE PRODUCTOS
@@ -247,12 +244,12 @@ const initCategoryCarousel = () => {
 /**
  * Avanza a la siguiente categoría en el carrusel
  */
-window.prevCategory = () => setCategorySlide(categoryIndex - 1);
+const prevCategory = () => setCategorySlide(categoryIndex - 1);
 
 /**
  * Retrocede a la categoría anterior
  */
-window.nextCategory = () => setCategorySlide(categoryIndex + 1);
+const nextCategory = () => setCategorySlide(categoryIndex + 1);
 
 /**
  * Establece la diapositiva actual del carrusel
@@ -338,7 +335,7 @@ const updateCarouselProgress = value => {
  * Ordena productos por precio o novedad
  * @param {string} v - Criterio: 'asc', 'desc', 'new'
  */
-window.sortProducts = v => {
+const sortProducts = v => {
   if (!v) return;
 
   const sorted = [...filtered];
@@ -492,7 +489,7 @@ const toggleCart = () => {
  * Cambia entre tabs de login/registro
  * @param {string} tab - 'login' o 'register'
  */
-window.switchTab = tab => {
+const switchTab = tab => {
   document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
 
@@ -811,11 +808,11 @@ window.addToCart = addToCart;
 // Favoritos y productos
 window.toggleFav = toggleFav;
 window.filterProducts = filterProducts;
-window.sortProducts = window.sortProducts; // Ya definido arriba
+window.sortProducts = sortProducts;
 
 // Categorías
-window.prevCategory = window.prevCategory; // Ya definido arriba
-window.nextCategory = window.nextCategory; // Ya definido arriba
+window.prevCategory = prevCategory;
+window.nextCategory = nextCategory;
 
 // Checkout
 window.goStep2 = goStep2;
@@ -826,7 +823,7 @@ window.processPay = processPay;
 window.closeModal = closeModal;
 
 // Formularios
-window.switchTab = window.switchTab; // Ya definido arriba
+window.switchTab = switchTab;
 window.handleLogin = handleLogin;
 window.handleRegister = handleRegister;
 window.handleContact = handleContact;
