@@ -26,9 +26,9 @@
       <li><a href="#checkout">Checkout</a></li>
     </ul>
   </nav>
-  <button class="nav-cart">
+  <button class="nav-cart" onclick="toggleCart()">
     <span>🛒</span> Carrito
-    <span class="cart-count">0</span>
+    <span class="cart-count" id="cartCount">0</span>
   </button>
 </header>
 <main>
@@ -71,9 +71,9 @@
   </div>
   <div class="cat-carousel">
     <div class="cat-carousel-window">
-      <button class="btn-outline carousel-nav left" type="button">←</button>
+      <button class="btn-outline carousel-nav left" type="button" onclick="prevCategory()">←</button>
       <div class="cat-grid" id="catGrid">
-        <div class="cat-card active" data-cat-index="0">
+        <div class="cat-card active" onclick="filterProducts('Casual')" data-cat-index="0">
           <img class="cat-img" src="./imagenes/categorias/casual.jpg" alt="Casual">
           <div class="cat-overlay">
             <div class="cat-tag">Línea</div>
@@ -81,7 +81,7 @@
             <div class="cat-desc">Comodidad con clase para cada día.</div>
           </div>
         </div>
-        <div class="cat-card hidden" data-cat-index="1">
+        <div class="cat-card hidden" onclick="filterProducts('Formal')" data-cat-index="1">
           <img class="cat-img" src="./imagenes/categorias/formal.jpg" alt="Formal">
           <div class="cat-overlay">
             <div class="cat-tag">Línea</div>
@@ -89,7 +89,7 @@
             <div class="cat-desc">Elegancia profesional a otro nivel.</div>
           </div>
         </div>
-        <div class="cat-card hidden" data-cat-index="2">
+        <div class="cat-card hidden" onclick="filterProducts('Deportiva')" data-cat-index="2">
           <img class="cat-img" src="./imagenes/categorias/deportiva.jpg" alt="Deportiva">
           <div class="cat-overlay">
             <div class="cat-tag">Línea</div>
@@ -97,7 +97,7 @@
             <div class="cat-desc">Alto rendimiento, diseño premium.</div>
           </div>
         </div>
-        <div class="cat-card hidden" data-cat-index="3">
+        <div class="cat-card hidden" onclick="filterProducts('Lujo')" data-cat-index="3">
           <img class="cat-img" src="./imagenes/categorias/lujo.jpg" alt="Lujo">
           <div class="cat-overlay">
             <div class="cat-tag">Línea</div>
@@ -106,7 +106,7 @@
           </div>
         </div>
       </div>
-      <button class="btn-outline carousel-nav right" type="button">→</button>
+      <button class="btn-outline carousel-nav right" type="button" onclick="nextCategory()">→</button>
     </div>
     <div class="cat-carousel-progress">
       <span class="carousel-progress-fill" id="carouselProgress"></span>
@@ -122,12 +122,12 @@
     <div class="section-line"></div>
   </div>
   <div class="prod-filters">
-    <button class="filter-btn active">Todos</button>
-    <button class="filter-btn">Casual</button>
-    <button class="filter-btn">Formal</button>
-    <button class="filter-btn">Deportiva</button>
-    <button class="filter-btn">Lujo</button>
-    <select class="filter-select">
+    <button class="filter-btn active" onclick="filterProducts('Todos',this)">Todos</button>
+    <button class="filter-btn" onclick="filterProducts('Casual',this)">Casual</button>
+    <button class="filter-btn" onclick="filterProducts('Formal',this)">Formal</button>
+    <button class="filter-btn" onclick="filterProducts('Deportiva',this)">Deportiva</button>
+    <button class="filter-btn" onclick="filterProducts('Lujo',this)">Lujo</button>
+    <select class="filter-select" onchange="sortProducts(this.value)">
       <option value="">Ordenar por</option>
       <option value="asc">Menor precio</option>
       <option value="desc">Mayor precio</option>
@@ -153,40 +153,48 @@
     </div>
     <div class="auth-box">
       <div class="auth-tabs">
-        <button class="auth-tab active">Iniciar Sesión</button>
-        <button class="auth-tab">Registrarse</button>
+        <button class="auth-tab active" onclick="switchTab('login')">Iniciar Sesión</button>
+        <button class="auth-tab" onclick="switchTab('register')">Registrarse</button>
       </div>
-      <form class="auth-form active">
+      <form class="auth-form active" id="loginForm" novalidate>
         <div class="form-group">
-          <label>Correo Electrónico</label>
-          <input type="email" placeholder="tu@email.com">
+          <label for="loginEmail">Correo Electrónico</label>
+          <input type="email" placeholder="tu@email.com" id="loginEmail" name="loginEmail">
+          <div class="auth-msg field-error" id="loginEmailError"></div>
         </div>
         <div class="form-group">
-          <label>Contraseña</label>
-          <input type="password" placeholder="••••••••">
+          <label for="loginPass">Contraseña</label>
+          <input type="password" placeholder="••••••••" id="loginPass" name="loginPass">
+          <div class="auth-msg field-error" id="loginPassError"></div>
         </div>
         <button class="btn-primary" type="submit" style="width:100%;border:none">Ingresar</button>
+        <div class="auth-msg" id="loginMsg"></div>
         <div class="form-divider">o</div>
         <p style="text-align:center;font-size:.78em;color:var(--gray)">¿Olvidaste tu contraseña? <a href="#" style="color:var(--cyan)">Recuperar acceso</a></p>
       </form>
-      <form class="auth-form">
+      <form class="auth-form" id="registerForm" novalidate>
         <div class="form-group">
-          <label>Nombre Completo</label>
-          <input type="text" placeholder="Tu nombre">
+          <label for="regName">Nombre Completo</label>
+          <input type="text" placeholder="Tu nombre" id="regName" name="regName">
+          <div class="auth-msg field-error" id="regNameError"></div>
         </div>
         <div class="form-group">
-          <label>Correo Electrónico</label>
-          <input type="email" placeholder="tu@email.com">
+          <label for="regEmail">Correo Electrónico</label>
+          <input type="email" placeholder="tu@email.com" id="regEmail" name="regEmail">
+          <div class="auth-msg field-error" id="regEmailError"></div>
         </div>
         <div class="form-group">
-          <label>Contraseña</label>
-          <input type="password" placeholder="Mínimo 8 caracteres">
+          <label for="regPass">Contraseña</label>
+          <input type="password" placeholder="Mínimo 8 caracteres" id="regPass" name="regPass">
+          <div class="auth-msg field-error" id="regPassError"></div>
         </div>
         <div class="form-group">
-          <label>Confirmar Contraseña</label>
-          <input type="password" placeholder="Repite tu contraseña">
+          <label for="regPass2">Confirmar Contraseña</label>
+          <input type="password" placeholder="Repite tu contraseña" id="regPass2" name="regPass2">
+          <div class="auth-msg field-error" id="regPass2Error"></div>
         </div>
         <button class="btn-primary" type="submit" style="width:100%;border:none">Crear Cuenta</button>
+        <div class="auth-msg" id="registerMsg"></div>
       </form>
     </div>
   </div>
@@ -198,20 +206,24 @@
     <h2 class="section-title">Escríbenos</h2>
     <div class="section-line"></div>
   </div>
-  <form class="contact-form">
+  <form id="contactoForm" class="contact-form" novalidate>
     <div class="form-group">
-      <label>Nombre Completo</label>
-      <input type="text" placeholder="Tu nombre">
+      <label for="contactName">Nombre Completo</label>
+      <input type="text" id="contactName" name="contactName" placeholder="Tu nombre">
+      <div class="auth-msg field-error" id="contactNameError"></div>
     </div>
     <div class="form-group">
-      <label>Correo Electrónico</label>
-      <input type="email" placeholder="tu@email.com">
+      <label for="contactEmail">Correo Electrónico</label>
+      <input type="email" id="contactEmail" name="contactEmail" placeholder="tu@email.com">
+      <div class="auth-msg field-error" id="contactEmailError"></div>
     </div>
     <div class="form-group">
-      <label>Mensaje</label>
-      <textarea rows="5" placeholder="Escribe tu mensaje"></textarea>
+      <label for="contactMessage">Mensaje</label>
+      <textarea id="contactMessage" name="contactMessage" rows="5" placeholder="Escribe tu mensaje"></textarea>
+      <div class="auth-msg field-error" id="contactMessageError"></div>
     </div>
     <button class="btn-primary" type="submit" style="width:100%;border:none">Enviar Mensaje</button>
+    <div class="auth-msg" id="contactMsg"></div>
   </form>
 </section>
 
@@ -227,58 +239,58 @@
       <div class="checkout-steps">
         <div class="step active"><span class="step-num">1</span> Datos</div>
         <div class="step-sep"></div>
-        <div class="step"><span class="step-num">2</span> Envío</div>
+        <div class="step" id="step2"><span class="step-num">2</span> Envío</div>
         <div class="step-sep"></div>
-        <div class="step"><span class="step-num">3</span> Pago</div>
+        <div class="step" id="step3"><span class="step-num">3</span> Pago</div>
       </div>
-      <div>
+      <div id="checkoutStep1">
         <div class="checkout-form-title">Información Personal</div>
         <div class="form-row">
-          <div class="checkout-group"><label>Nombre</label><input type="text" placeholder="María"></div>
-          <div class="checkout-group"><label>Apellido</label><input type="text" placeholder="González"></div>
+          <div class="checkout-group"><label>Nombre</label><input type="text" placeholder="María" id="ckName"></div>
+          <div class="checkout-group"><label>Apellido</label><input type="text" placeholder="González" id="ckLastname"></div>
         </div>
-        <div class="checkout-group"><label>Email</label><input type="email" placeholder="tu@email.com"></div>
-        <div class="checkout-group"><label>Teléfono</label><input type="tel" placeholder="+56 9 1234 5678"></div>
+        <div class="checkout-group"><label>Email</label><input type="email" placeholder="tu@email.com" id="ckEmail"></div>
+        <div class="checkout-group"><label>Teléfono</label><input type="tel" placeholder="+56 9 1234 5678" id="ckPhone"></div>
         <div class="checkout-form-title" style="margin-top:24px">Dirección de Envío</div>
-        <div class="checkout-group"><label>Dirección</label><input type="text" placeholder="Av. Apoquindo 1234"></div>
+        <div class="checkout-group"><label>Dirección</label><input type="text" placeholder="Av. Apoquindo 1234" id="ckAddr"></div>
         <div class="form-row">
           <div class="checkout-group"><label>Ciudad</label>
-            <select>
+            <select id="ckCity">
               <option>Santiago</option><option>Valparaíso</option><option>Viña del Mar</option><option>Concepción</option><option>Antofagasta</option>
             </select>
           </div>
-          <div class="checkout-group"><label>Código Postal</label><input type="text" placeholder="7550000"></div>
+          <div class="checkout-group"><label>Código Postal</label><input type="text" placeholder="7550000" id="ckZip"></div>
         </div>
-        <button class="btn-primary" style="width:100%;border:none;margin-top:8px">Continuar al Pago →</button>
+        <button class="btn-primary" style="width:100%;border:none;margin-top:8px" onclick="goStep2()">Continuar al Pago →</button>
       </div>
-      <div style="display:none">
+      <div id="checkoutStep2" style="display:none">
         <div class="checkout-form-title">Método de Pago</div>
         <div class="pay-methods">
-          <div class="pay-method active">Tarjeta Crédito</div>
-          <div class="pay-method">Tarjeta Débito</div>
-          <div class="pay-method">WebPay</div>
-          <div class="pay-method">Transferencia</div>
+          <div class="pay-method active" onclick="selectPay(this)">Tarjeta Crédito</div>
+          <div class="pay-method" onclick="selectPay(this)">Tarjeta Débito</div>
+          <div class="pay-method" onclick="selectPay(this)">WebPay</div>
+          <div class="pay-method" onclick="selectPay(this)">Transferencia</div>
         </div>
-        <div class="checkout-group"><label>Número de Tarjeta</label><input type="text" placeholder="1234 5678 9101 1121" maxlength="19"></div>
+        <div class="checkout-group"><label>Número de Tarjeta</label><input type="text" placeholder="1234 5678 9101 1121" id="ckCard" maxlength="19" oninput="formatCard(this)"></div>
         <div class="form-row">
-          <div class="checkout-group"><label>Vencimiento</label><input type="text" placeholder="MM / AA" maxlength="7"></div>
-          <div class="checkout-group"><label>CVV</label><input type="text" placeholder="•••" maxlength="3"></div>
+          <div class="checkout-group"><label>Vencimiento</label><input type="text" placeholder="MM / AA" id="ckExp" maxlength="7"></div>
+          <div class="checkout-group"><label>CVV</label><input type="text" placeholder="•••" id="ckCvv" maxlength="3"></div>
         </div>
-        <div class="checkout-group"><label>Nombre en la Tarjeta</label><input type="text" placeholder="MARIA GONZALEZ"></div>
+        <div class="checkout-group"><label>Nombre en la Tarjeta</label><input type="text" placeholder="MARIA GONZALEZ" id="ckCardName"></div>
         <div class="secure-badge">🔒 Pago 100% seguro · Encriptación SSL 256-bit · PCI DSS</div>
         <div style="display:flex;gap:12px;margin-top:20px">
-          <button class="btn-outline" style="border:1px solid rgba(255,255,255,.2)">← Volver</button>
-          <button class="btn-primary" style="flex:1;border:none">Confirmar Compra · <span>$0</span></button>
+          <button class="btn-outline" style="border:1px solid rgba(255,255,255,.2)" onclick="backStep1()">← Volver</button>
+          <button class="btn-primary" style="flex:1;border:none" onclick="processPay()">Confirmar Compra · <span id="payTotal">$0</span></button>
         </div>
       </div>
     </div>
     <div class="order-summary">
       <div class="order-title">Resumen del Pedido</div>
-      <div><p style="color:var(--gray);font-size:.85em">No hay productos en el carrito.</p></div>
+      <div id="orderItems"><p style="color:var(--gray);font-size:.85em">No hay productos en el carrito.</p></div>
       <div class="order-divider"></div>
-      <div class="order-total-row"><span style="color:var(--gray);font-size:.85em">Subtotal</span><span>$0</span></div>
+      <div class="order-total-row"><span style="color:var(--gray);font-size:.85em">Subtotal</span><span id="oSubtotal">$0</span></div>
       <div class="order-total-row"><span style="color:var(--gray);font-size:.85em">Envío</span><span style="color:#4caf50;font-size:.85em">Gratis</span></div>
-      <div class="order-total-row final"><span>Total</span><span>$0</span></div>
+      <div class="order-total-row final"><span>Total</span><span id="oTotal">$0</span></div>
     </div>
   </div>
 </section>
@@ -331,6 +343,38 @@
     <span>RUT: 76.xxx.xxx-x · Santiago, Chile</span>
   </div>
 </footer>
+
+<!-- CARRITO LATERAL -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header-d">
+    <h3>Tu Carrito</h3>
+    <button class="cart-close" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItemsEl"></div>
+  <div class="cart-footer-d">
+    <div class="cart-total"><span>Total</span><span id="cartTotalEl">$0</span></div>
+    <a href="#checkout" class="btn-primary" style="width:100%;text-align:center;display:block" onclick="toggleCart()">Ir al Checkout →</a>
+  </div>
+</div>
+
+<!-- MODAL ÉXITO -->
+<div class="modal-overlay" id="successModal">
+  <div class="modal">
+    <div class="modal-icon">✓</div>
+    <h3>¡Compra Exitosa!</h3>
+    <p>Tu pedido ha sido procesado correctamente. Recibirás un correo de confirmación con el número de seguimiento.</p>
+    <button class="btn-primary" style="border:none;width:100%" onclick="closeModal()">Volver al Inicio</button>
+  </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-wrap" id="toastWrap"></div>
+
+<script src="js/Formulario_de_Registro.js"></script>
+<script src="js/Formulario_de_Login.js"></script>
+<script src="js/Formulario_de_Contacto.js"></script>
+<script src="js/main.js?v=1"></script>
 </body>
 </html>
 
