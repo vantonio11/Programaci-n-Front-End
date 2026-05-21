@@ -508,3 +508,4 @@ window.clearFieldErrors = clearFieldErrors;
 window.switchTab = switchTab;
 
 console.log('✅ main.js loaded successfully - filterProducts ready');
+
