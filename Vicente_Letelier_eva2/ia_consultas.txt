@@ -1,5 +1,5 @@
 =========================================================
-  CONSULTAS A IA — PROYECTO ViceLete 
+  CONSULTAS A IA — PROYECTO ViceLete
 =========================================================
 
 -------------------------------------------------------
@@ -18,3 +18,161 @@ en un carrusel funcional con JS vanilla:
 - Sin librerías externas, solo DOM puro
 
 
+-------------------------------------------------------
+PROMPT 2 — FORMULARIOS Y VALIDACIONES
+-------------------------------------------------------
+En index.html integra/verifica 3 formularios con labels vinculados (for/id):
+
+1. Registro (#registerForm) — nombre, email, contraseña, confirmar contraseña
+2. Login (#loginForm) — email, contraseña
+3. Contacto (sección nueva #contacto) — nombre, email, mensaje (<textarea>)
+
+Cada <label> debe tener for="id" apuntando a su <input> correspondiente.
+
+Validaciones JS (sin librerías) en cada submit:
+- Campos vacíos → mostrar error inline bajo el input
+- Email: regex /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+- Contraseña: mín 8 chars, al menos 1 número y 1 mayúscula
+- Confirmar contraseña: debe coincidir
+- Mensaje: mínimo 10 caracteres
+- Sanitizar inputs: trim() y escapar < > antes de procesar
+- No exponer mensajes de error que revelen si el email existe
+
+Reutiliza clases CSS existentes: .form-group, .auth-msg, .btn-primary,
+variables --cyan, --navy2. Los JS de validación ya existen en
+./js/Formulario_de_Login.js y ./js/Formulario_de_Registro.js — extiéndelos.
+
+
+-------------------------------------------------------
+PROMPT 3 — ESTRUCTURAS DE DATOS Y FUNCIONES MODULARES
+-------------------------------------------------------
+Refactoriza el JS de index.html y los archivos ./js/ aplicando:
+
+ESTRUCTURAS DE DATOS:
+- Objeto usuario: { id, nombre, email, password, fechaRegistro, rol:'user' }
+- Arreglo global: const usuarios = [] — almacena inscritos al registrarse
+- Objeto sesion: { activo: false, usuario: null } — estado del login
+
+FUNCIONES MODULARES (nombrar exactamente así):
+- validarDatos(formData)     → retorna { valid, errores[] }
+- registrarUsuario(datos)    → crea objeto usuario, push a usuarios[]
+- iniciarSesion(email, pass) → busca en usuarios[], actualiza sesion
+- cerrarSesion()             → resetea sesion
+- cambiarImagen(direccion)   → lógica del carrusel (+1/-1 en índice)
+- actualizarDOM(seccion)     → re-renderiza productos, carrusel o resumen
+- mostrarError(inputId, msg) → inyecta error inline bajo el input
+- limpiarErrores(formId)     → elimina todos los errores del form
+
+REGLAS:
+- Ninguna lógica dentro de onclick="" en HTML, solo llamadas a funciones
+- Los archivos JS deben exportar sus funciones al scope global
+  (window.validarDatos = validarDatos)
+- Usar const/let, arrow functions, sin var
+
+
+-------------------------------------------------------
+PROMPT 4 — CORRECCIÓN DE NOMBRES DE ARCHIVOS JS
+-------------------------------------------------------
+Renombra los archivos JS y corrige las referencias en index.html:
+
+RENOMBRAR (quitar espacios):
+- "Formulario de Registro.js"  →  "Formulario_de_Registro.js"
+- "Formulario de Login.js"     →  "Formulario_de_Login.js"
+- "Formulario de Contacto.js"  →  "Formulario_de_Contacto.js"
+
+ACTUALIZAR en index.html los <script src>:
+<script src="js/Formulario_de_Registro.js"></script>
+<script src="js/Formulario_de_Login.js"></script>
+<script src="js/Formulario_de_Contacto.js"></script>
+<script src="js/main.js"></script>
+
+CORREGIR bug en Formulario_de_Contacto.js:
+- La función handleContact llama a showFormMessage() que solo existe
+  en main.js. Elimina handleContact de Formulario_de_Contacto.js,
+  ya que main.js define su propia versión.
+
+Verifica que el orden de carga sea siempre:
+Registro → Login → Contacto → main.js
+
+
+-------------------------------------------------------
+PROMPT 5 — DEPURACIÓN: PRODUCTOS NO VISIBLES EN PÁGINA
+-------------------------------------------------------
+Tengo un proyecto web con estos archivos JS que se cargan como
+<script src> clásicos (mismo scope global del navegador):
+
+  js/Formulario_de_Registro.js  →  carga 1°
+  js/Formulario_de_Login.js     →  carga 2°
+  js/Formulario_de_Contacto.js  →  carga 3°
+  js/main.js                    →  carga 4°
+
+PROBLEMA: main.js nunca ejecuta → los productos no aparecen.
+CAUSA: SyntaxError por identificadores declarados múltiples veces
+en el mismo scope global.
+
+AUDITA y CORRIGE los 4 archivos siguiendo estas reglas estrictas:
+
+REGLA 1 — Una sola declaración por nombre:
+  Busca TODOS los nombres declarados con const/let/function en cada
+  archivo. Si el mismo nombre aparece en más de un archivo,
+  elimínalo de los archivos que cargan ANTES que main.js.
+  main.js es la fuente de verdad — nunca tocar main.js.
+
+REGLA 2 — Nombres prohibidos en Registro.js y Login.js:
+  Elimina completamente de esos archivos cualquier declaración de:
+  · const validarDatos
+  · const showFieldError
+  · const clearFieldErrors
+  · cualquier otro nombre que ya exista en main.js
+
+REGLA 3 — Formulario_de_Contacto.js:
+  Solo puede llamar funciones definidas en main.js.
+  No puede declarar ninguna función que ya exista en main.js.
+
+REGLA 4 — window.X solo en el archivo que lo declara:
+  Si sanitizeInput vive en Registro.js → solo Registro.js hace
+  window.sanitizeInput = sanitizeInput. No repetir en otros archivos.
+
+VERIFICA al final:
+  · Ningún nombre const/let/function aparece declarado en 2+ archivos
+  · El orden de dependencias es correcto
+  · En index.html el orden de <script src> es:
+    Registro → Login → Contacto → main.js
+
+El síntoma que confirma el fix: en consola del navegador
+typeof filterProducts debe retornar "function", no "undefined".
+
+
+-------------------------------------------------------
+PROMPT 6 — INTEGRACIÓN DE IMÁGENES LOCALES Y PRECIOS
+-------------------------------------------------------
+En index.html reemplaza el array PRODUCTS usando las imágenes
+locales subidas al proyecto. Usa rutas relativas ./imagenes/nombre.jpg
+y asigna precios en pesos chilenos sin decimales:
+
+- Chaquetas: entre $200.000 y $250.000
+- Trajes: $500.000
+- Zapatillas: entre $200.000 y $500.000
+- Variar precios entre: 200000, 225000, 250000, 500000
+- Nombres descriptivos en español para cada producto
+- Asignar categorías: Casual, Formal, Deportiva, Lujo
+- Asignar badges: Bestseller, Exclusivo, Premium, Nuevo donde corresponda
+
+
+-------------------------------------------------------
+PROMPT 7 — LOCALSTORAGE PARA PERSISTENCIA DE USUARIOS
+-------------------------------------------------------
+En la función registrarUsuario() de main.js, agrega persistencia
+usando localStorage con la clave 'luxe_usuarios_v1':
+
+- Al registrar: JSON.stringify(usuarios) y guardar con setItem
+- Al cargar la página: recuperar con getItem y JSON.parse
+- Al iniciar sesión: buscar el usuario en el arreglo cargado
+- Manejar errores de parseo con try/catch
+
+Verificación en consola del navegador:
+  JSON.parse(localStorage.getItem('luxe_usuarios_v1'))
+
+=========================================================
+  FIN DEL ARCHIVO
+=========================================================
