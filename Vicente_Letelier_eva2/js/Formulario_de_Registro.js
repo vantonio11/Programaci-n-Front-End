@@ -28,7 +28,7 @@ function validateRegistration(name, email, password, confirmPassword){
   return { valid: Object.keys(errors).length === 0, errors };
 }
 
-// validarDatos NO se declara aquí — la versión final está en main.js
+// validarDatos NO se declara aquí — la versión final estara en main.js
 
 window.sanitizeInput        = sanitizeInput;
 window.validateEmail        = validateEmail;
