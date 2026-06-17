@@ -13,8 +13,8 @@ const usuarios = [];
 const sesion = { activo: false, usuario: null };
 
 // Claves para LocalStorage
-const STORAGE_KEY = 'luxe_usuarios_v1';
-const SESSION_KEY = 'luxe_sesion_v1';
+const STORAGE_KEY = 'Lete_usuarios_v1';
+const SESSION_KEY = 'Lete_sesion_v1';
 
 /**
  * Carga el estado guardado desde LocalStorage
@@ -72,7 +72,7 @@ const PRODUCTS = [
   { id: 6, name: 'Zapatillas NZXT Gaming', cat: 'Deportiva', price: 500000, img: './imagenes/zapatillas/zapa2.jpg', badge: 'Exclusivo', isNew: true },
   { id: 7, name: 'Zapatillas White Runner', cat: 'Deportiva', price: 225000, img: './imagenes/zapatillas/zapa3.jpg', badge: '', isNew: false },
   { id: 8, name: 'Zapatillas Neon Sport', cat: 'Deportiva', price: 250000, img: './imagenes/zapatillas/zapa4.jpg', badge: '', isNew: true },
-  { id: 9, name: 'Nike Mag Future Luxe', cat: 'Lujo', price: 2000000, img: './imagenes/zapatillas/zapa5.jpg', badge: 'Exclusivo', isNew: false }
+  { id: 9, name: 'Nike Mag Future Lete', cat: 'Lujo', price: 2000000, img: './imagenes/zapatillas/zapa5.jpg', badge: 'Exclusivo', isNew: false }
 ];
 
 // ==========================================

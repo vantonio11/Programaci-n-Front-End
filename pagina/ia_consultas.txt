@@ -163,7 +163,7 @@ y asigna precios en pesos chilenos sin decimales:
 PROMPT 7 — LOCALSTORAGE PARA PERSISTENCIA DE USUARIOS
 -------------------------------------------------------
 En la función registrarUsuario() de main.js, agrega persistencia
-usando localStorage con la clave 'luxe_usuarios_v1':
+usando localStorage con la clave 'Lete_usuarios_v1':
 
 - Al registrar: JSON.stringify(usuarios) y guardar con setItem
 - Al cargar la página: recuperar con getItem y JSON.parse
@@ -171,7 +171,7 @@ usando localStorage con la clave 'luxe_usuarios_v1':
 - Manejar errores de parseo con try/catch
 
 Verificación en consola del navegador:
-  JSON.parse(localStorage.getItem('luxe_usuarios_v1'))
+  JSON.parse(localStorage.getItem('Lete_usuarios_v1'))
 
 =========================================================
   FIN DEL ARCHIVO
