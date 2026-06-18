@@ -16,6 +16,7 @@ import Checkout from './components/Checkout';
 import Footer from './components/Footer';
 import CartDrawer from './components/CartDrawer';
 import Toasts from './components/Toasts';
+import AccessibilityMenu from './components/AccessibilityMenu';
 
 import { useCart } from './hooks/useCart';
 import { useFavorites } from './hooks/useFavorites';
@@ -80,6 +81,9 @@ function App() {
       />
 
       <Toasts toasts={toasts} />
+
+      {/* Menú flotante de accesibilidad */}
+      <AccessibilityMenu />
     </>
   );
 }
